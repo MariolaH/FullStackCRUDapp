@@ -1,4 +1,4 @@
-export default function TableList() {
+export default function TableList({handleOpen}) {
   const clients = [
     {
       id: 1,
@@ -53,9 +53,15 @@ export default function TableList() {
                   <td>
                     <button
                       className={`btn rounded-full w-20 ${
-                        client.isactive ? `btn-primary` : `btn-outline-primary`
-                      }`}
-                    ></button>
+                        client.isactive ? `btn-primary` : `btn-outline btn-primary`
+                      }`} 
+                    > {client.isactive ? `Active` : `Inactive`}</button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleOpen('edit')} className="btn btn-secondary">Update</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-accent">Delete</button>
                   </td>
                 </tr>
               );
