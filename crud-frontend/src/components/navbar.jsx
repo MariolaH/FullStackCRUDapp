@@ -1,4 +1,8 @@
-export default function NavBar({onOpen}) {
+export default function NavBar({onOpen, onSearch}) {
+  const handleSearchChange = (event) => {
+    onSearch(event.target.value); //call the onsearch callback with the input value
+  }; 
+
   return (
     <>
       <div className="navbar bg-base-100 p-4">
@@ -8,7 +12,7 @@ export default function NavBar({onOpen}) {
         </div>
         <div className="navbar-center">
         <div className="form-control">
-      <input type="text" placeholder="Search" className="input input-bordered w-48 md:w-auto" />
+      <input type="text" placeholder="Search" onChange={handleSearchChange} className="input input-bordered w-48 md:w-auto" />
     </div>
           
               

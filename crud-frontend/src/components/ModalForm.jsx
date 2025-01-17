@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ModalForm({ isOpen, onClose, mode, onSubmit }) {
+export default function ModalForm({ isOpen, onClose, mode, OnSubmit, clientData }) {
   const [rate, setRate] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,10 +13,33 @@ export default function ModalForm({ isOpen, onClose, mode, onSubmit }) {
     setStatus(e.target.value === "Active"); //Set status as boolean
   };
 
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
-    onClose(e);
-  };
+    try {
+      const clientData = {name, email, job, rate: Number(rate), isactive: status}
+      await OnSubmit(clientData)
+      onClose(e);
+    } catch (err) {
+      console.error("Error addinf client", err)
+    }
+  }
+
+  useEffect(() => {
+    if (mode === 'edit' && clientData) {
+        setName(clientData.name);
+        setEmail(clientData.email);
+        setJob(clientData.job);
+        setRate(clientData.rate);
+        setStatus(clientData.isActive); // Assuming isActive is a boolean
+    } else {
+        // Reset fields when adding a new client
+        setName('');
+        setEmail('');
+        setJob('');
+        setRate('');
+        setStatus(false);
+    }
+}, [mode, clientData]);
 
   return (
     <>
